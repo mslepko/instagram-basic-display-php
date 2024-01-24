@@ -130,10 +130,12 @@ class InstagramBasicDisplay
      * @param int $limit
      * @param string|null $before
      * @param string|null $after
+     * @param string|null $since - A Unix timestamp or strtotime data value that points to the start of the range of time-based data.
+     * @param string|null $until - A Unix timestamp or strtotime data value that points to the end of the range of time-based data.
      * @return object
      * @throws InstagramBasicDisplayException
      */
-    public function getUserMedia($id = 'me', $limit = 0, $before = null, $after = null)
+    public function getUserMedia($id = 'me', $limit = 0, $before = null, $after = null, $since = null, $until = null)
     {
         $params = [
             'fields' => $this->_mediaFields
@@ -147,6 +149,12 @@ class InstagramBasicDisplay
         }
         if (isset($after)) {
             $params['after'] = $after;
+        }
+        if (isset($since)) {
+            $params['since'] = $since;
+        }
+        if (isset($until)) {
+            $params['until'] = $until;
         }
 
         return $this->_makeCall($id . '/media', $params);
